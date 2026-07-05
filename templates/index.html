@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AutoReply</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+<div class="app">
+
+  <header class="topbar">
+    <div class="topbar-title">
+      <span class="topbar-avatar">💬</span>
+      <div>
+        <div class="topbar-name">AutoReply</div>
+        <div class="topbar-subtitle" id="topbar-subtitle">time-conditioned reply model</div>
+      </div>
+    </div>
+    <button class="icon-button" id="settings-button" title="Settings" aria-label="Open settings">⚙</button>
+  </header>
+
+  <main class="chat-container">
+    <div class="transcript" id="transcript"></div>
+
+    <div class="chips-row hidden" id="chips-row"></div>
+
+    <form class="partner-input-row" id="partner-form">
+      <input type="text" id="partner-input" class="partner-input"
+             placeholder="What did your partner say?" autocomplete="off">
+      <button type="submit" class="send-button secondary" title="Add partner message" aria-label="Add partner message">➜</button>
+    </form>
+
+    <form class="compose-row" id="compose-form">
+      <div class="compose-input-wrapper">
+        <div class="ghost-text" id="ghost-text" aria-hidden="true"></div>
+        <textarea id="compose-input" class="compose-input" rows="1"
+                  placeholder="Type your reply... (Tab to accept suggestion)" autocomplete="off"></textarea>
+      </div>
+      <button type="submit" class="send-button" title="Send" aria-label="Send">➤</button>
+    </form>
+  </main>
+
+  <div class="modal-backdrop hidden" id="settings-backdrop">
+    <div class="modal" id="settings-modal">
+      <div class="modal-header">
+        <h2>Session settings</h2>
+        <button class="icon-button" id="settings-close" aria-label="Close settings">✕</button>
+      </div>
+
+      <label class="field">
+        <input type="checkbox" id="use-now-toggle" checked>
+        Use current day/time
+      </label>
+
+      <label class="field">
+        <span>Day</span>
+        <select id="day-select">
+          <option>Monday</option>
+          <option>Tuesday</option>
+          <option>Wednesday</option>
+          <option>Thursday</option>
+          <option>Friday</option>
+          <option>Saturday</option>
+          <option>Sunday</option>
+        </select>
+      </label>
+
+      <label class="field">
+        <span>Time</span>
+        <input type="time" id="time-input">
+      </label>
+
+      <label class="field">
+        <span>Temperature <output id="temperature-value">0.7</output></span>
+        <input type="range" id="temperature-input" min="0.1" max="2.0" step="0.05" value="0.7">
+      </label>
+
+      <label class="field">
+        <span>Repetition penalty <output id="penalty-value">2.0</output></span>
+        <input type="range" id="penalty-input" min="1.0" max="6.0" step="0.1" value="2.0">
+      </label>
+
+      <button class="primary-button" id="settings-save">Save</button>
+      <button class="text-button" id="clear-chat">Clear conversation</button>
+    </div>
+  </div>
+
+  <div class="modal-backdrop" id="access-key-backdrop">
+    <div class="modal">
+      <div class="modal-header">
+        <h2>Access key required</h2>
+      </div>
+      <p class="modal-note">This app is gated with a private access key. Enter it to continue.</p>
+      <label class="field">
+        <span>Access key</span>
+        <input type="password" id="access-key-input" autocomplete="off">
+      </label>
+      <p class="modal-error hidden" id="access-key-error">Incorrect key - try again.</p>
+      <button class="primary-button" id="access-key-submit">Continue</button>
+    </div>
+  </div>
+
+</div>
+
+<script src="{{ url_for('static', filename='js/api-service.js') }}"></script>
+<script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>
